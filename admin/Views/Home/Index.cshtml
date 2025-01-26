@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container py-5">
+    <!-- Header -->
+    <header class="text-center mb-4">
+        <h1 class="display-4">WhatsApp Chatbot</h1>
+        <p class="lead">Connect with us through our interactive WhatsApp chatbot for instant support!</p>
+    </header>
+
+    <!-- Chat Button Section -->
+    <div class="text-center mt-5">
+        <button id="chatWithUsButton" class="btn btn-success btn-lg">
+            <i class="bi bi-whatsapp me-2"></i> Chat with Us
+        </button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('chatWithUsButton').addEventListener('click', function () {
+        // Capture the user's phone number (optional)
+        var userPhoneNumber = prompt("Please enter your phone number:");
+
+        // Capture the user's browser details
+        var userAgent = navigator.userAgent;
+        var browserDetails = {
+            browser: getBrowserName(userAgent),
+            version: getBrowserVersion(userAgent),
+            platform: navigator.platform,
+            language: navigator.language,
+            userAgent: userAgent
+        };
+
+        // You can log the details to the console (or send them to your server)
+        console.log("User Phone Number:", userPhoneNumber);
+        console.log("Browser Details:", browserDetails);
+
+        // Construct the WhatsApp link with a custom message
+        var whatsappLink = 'https://wa.me/+94766683490?text=Hello';
+
+        // Optionally, you can append the user's phone number or browser details to the URL or store them in a variable
+        whatsappLink += `&phone=${userPhoneNumber}&browser=${encodeURIComponent(JSON.stringify(browserDetails))}`;
+
+        // Open the WhatsApp link in a new tab
+        window.open(whatsappLink, '_blank');
+    });
+
+    // Function to get the browser name
+    function getBrowserName(userAgent) {
+        if (userAgent.indexOf("Chrome") > -1) {
+            return "Chrome";
+        } else if (userAgent.indexOf("Safari") > -1) {
+            return "Safari";
+        } else if (userAgent.indexOf("Firefox") > -1) {
+            return "Firefox";
+        } else if (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1) {
+            return "Internet Explorer";
+        } else {
+            return "Unknown";
+        }
+    }
+
+    // Function to get the browser version
+    function getBrowserVersion(userAgent) {
+        var versionMatch = userAgent.match(/(?:version|chrome|firefox|msie)[\/\s](\d+(\.\d+)?)/i);
+        return versionMatch ? versionMatch[1] : "Unknown version";
+    }
+
+</script>
